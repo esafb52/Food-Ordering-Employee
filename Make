@@ -1,0 +1,3 @@
+
+echo "Adding Executable Role to Migrate File ..."
+sudo chmod 777 ./Migrate.sh

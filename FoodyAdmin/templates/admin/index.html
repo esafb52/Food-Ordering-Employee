@@ -1,0 +1,104 @@
+{% extends "admin/base.html" %}
+
+{% block title %}
+داشبورد ادمین
+{%  endblock %}
+
+{% block admin_style %}
+{% endblock %}
+
+{% block main_content %}
+<div class="row justify-content-center align-items-center my-3">
+    <div class="col-lg-3 col-md-6 col-12 my-2">
+            <div class="card shadow hover-card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center flex-row-reverse">
+                        <div class="text-center">
+                            <p class="m-0 fs-5">مجموع سفارشات سامانه</p>
+                            <p class="m-0 fs-5">{{ ctx.all_orders }}</p>
+                        </div>
+                        <div>
+                            <i class="bi bi-bricks display-5 text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <i class="bi bi-arrow-clockwise"></i>
+                        <p class="m-0">بروزرسانی</p>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-12 my-2">
+            <div class="card shadow hover-card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center flex-row-reverse">
+                        <div class="text-center">
+                            <p class="m-0 fs-5">سفارشات امروز</p>
+                            <p class="m-0 fs-5">{{ ctx.today_orders }}</p>
+                        </div>
+                        <div>
+                            <i class="bi bi-calendar-event display-5 text-info"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <i class="bi bi-arrow-clockwise"></i>
+                        <p class="m-0">بروزرسانی</p>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-12 my-2">
+            <div class="card shadow hover-card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center flex-row-reverse">
+                        <div class="text-center">
+                            <p class="m-0 fs-5">کل کاربران</p>
+                            <p class="m-0 fs-5">{{ ctx.all_users }}</p>
+                        </div>
+                        <div>
+                            <i class="bi bi-people-fill display-5 text-success"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <i class="bi bi-arrow-clockwise"></i>
+                        <p class="m-0">بروزرسانی</p>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-12 my-2">
+            <div class="card shadow hover-card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center flex-row-reverse">
+                        <div class="text-center">
+                            <p class="m-0 fs-5">کل کاربران فعال </p>
+                            <p class="m-0 fs-5">{{ ctx.active_users }}</p>
+                        </div>
+                        <div>
+                            <i class="bi bi-people-fill display-5 text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <i class="bi bi-arrow-clockwise"></i>
+                        <p class="m-0">بروزرسانی</p>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+
+{% endblock  %}
+
+{% block admin_script %}
+{% endblock %}
+
+
+

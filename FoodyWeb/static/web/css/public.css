@@ -1,0 +1,72 @@
+@import url("./yekan/yekan.css");
+
+*{
+    font-family: 'Yekan';
+}
+
+
+.header-container{
+    min-height: 600px;
+    font-size: 1.5rem;
+}
+
+.line{
+    width: 40px;
+    height: 5px;
+    margin-top: 5px;
+    background-color: white !important;
+    transition: transform 0.5s;
+}
+
+.change .line-1{
+    transform: rotate(45deg) translateX(8px);
+}
+
+.change .line-2{
+    display: none;
+}
+
+.change .line-3{
+    transform: rotate(-45deg) translateX(8px);
+}
+
+
+.navbar-header{
+    font-size: 1.5rem;
+}
+
+.navbar-bg-normal{
+    background-color: rgba(0, 0, 0, 0.5);
+    
+}
+.navbar-bg-dark{
+    background-color: rgba(0, 0, 0, 0.7);
+
+}
+
+.navbar-azma{
+    transition: padding 0.5s;
+}
+
+
+/* Set up the container and cursor */
+.typing-text {
+    direction: ltr;
+    overflow: hidden;
+    border-right: 2px solid #fff; /* Cursor */
+    white-space: nowrap; /* Keep text in one line */
+    margin: 0 auto; /* Center the container horizontally */
+    letter-spacing: .0em; /* Adjust spacing between characters */
+    animation: typing 6s steps(40) infinite;
+}
+
+/* Define the typing animation */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
