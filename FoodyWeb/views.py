@@ -24,22 +24,6 @@ def aimd(path):
 @web.route("/")
 def index_view():
 
-    # add a user
-    new_user = User()
-    new_user.SetPassword("123654")
-    new_user.SetUsername("alisharify")
-    new_user.EmployeeCode = 111
-    new_user.SetPublicKey()
-    new_user.NationalCode = "12312321"
-    new_user.Email = "helloworld@gmail.com"
-    new_user.PhoneNumber = "12333333333"
-    try:
-        db.session.add(new_user)
-        db.session.commit()
-    except Exception as e:
-        print(e)
-        db.session.rollback()
-
     # add section
     for each in SECTIONS:
         s = Section()
