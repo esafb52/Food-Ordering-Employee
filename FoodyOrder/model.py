@@ -75,7 +75,6 @@ class Day(BaseModel):
     NameFa = Column(String(64), nullable=False, unique=True)
     NameEn = Column(String(64), nullable=False, unique=True)
 
-
     def __str__(self):
         return f"<Day {self.id}> {self.NameEn}"
 

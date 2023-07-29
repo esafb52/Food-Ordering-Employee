@@ -72,33 +72,3 @@ class AddFoodForm(FlaskForm):
         }
     )
 
-
-
-class SearchInFoodForm(FlaskForm):
-    """Base Form for Searching in Foods"""
-    Options = SelectField(
-        choices=[
-            ('day','بر اساس روز'),
-            ('name','نام غذا'),
-            ('text','متن غذا')
-        ],
-        validators=[
-            InputRequired(message="ورود داده در این فیلد الزامی است"),
-            DataRequired(message="ورود داده در این فیلد الزامی است"),
-        ],
-        render_kw={
-            "class": "form-control"
-        }
-    )
-
-    SearchBox = StringField(
-        validators=[
-            InputRequired(message="ورود داده در این فیلد الزامی است"),
-            DataRequired(message="ورود داده در این فیلد الزامی است"),
-        ],
-        render_kw={
-            "class":"form-control"
-        }
-    )
-
-    Submit = SubmitField()
