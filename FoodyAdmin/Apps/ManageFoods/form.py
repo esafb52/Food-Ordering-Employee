@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, MultipleFileField, TextAreaField, RadioField, \
-      SubmitField, SelectMultipleField
+      SubmitField, SelectMultipleField, SelectField
 from wtforms.validators import Length, DataRequired, InputRequired
 from FoodyConfig.config import VALID_DAYS
 
@@ -16,13 +16,17 @@ class CheckBoxField(SelectMultipleField):
 class AddFoodForm(FlaskForm):
     """Use This Class For adding new food to app"""
 
-
     Name = StringField(
         validators=[
             InputRequired(message="ورود داده در این فیلد الزامی است"),
             DataRequired(message="ورود داده در این فیلد الزامی است"),
             Length(min=2, max=64, message='حداکثر طول این فیلد 64 و حداقل 2 کاراکتر است')
-        ]
+        ],
+        render_kw={
+            "id": "Name",
+            "class": "form-control",
+            "placeholder": "نام غذا را وارد نمایید"
+        }
     )
 
     Description = TextAreaField(
@@ -30,13 +34,19 @@ class AddFoodForm(FlaskForm):
             InputRequired(message="ورود داده در این فیلد الزامی است"),
             DataRequired(message="ورود داده در این فیلد الزامی است"),
             Length(min=2, max=255, message='حداکثر طول این فیلد 255 و حداقل 2 کاراکتر است')
-        ]
+        ],
+        render_kw={
+            "id": "Description",
+            "class": "form-control",
+            "placeholder": "توضیحات غذا را وارد نمایید"
+        }
     )
 
     DayOfReserve = CheckBoxField(
         choices=[(each[1], each[0],) for each in VALID_DAYS],
         validators=[
-        ]
+        ],
+
     )
 
     Active = RadioField(
@@ -47,6 +57,48 @@ class AddFoodForm(FlaskForm):
         ]
     )
 
-    Images = MultipleFileField(render_kw={'multiple': True})
+    Images = MultipleFileField(
+        render_kw={
+            'multiple': True,
+            "id":"Images",
+            "class":"form-control"
+        }
+    )
+
+    Submit = SubmitField(
+        render_kw={
+            "class": "w-100 btn btn-success",
+            "value":"ثبت"
+        }
+    )
+
+
+
+class SearchInFoodForm(FlaskForm):
+    """Base Form for Searching in Foods"""
+    Options = SelectField(
+        choices=[
+            ('day','بر اساس روز'),
+            ('name','نام غذا'),
+            ('text','متن غذا')
+        ],
+        validators=[
+            InputRequired(message="ورود داده در این فیلد الزامی است"),
+            DataRequired(message="ورود داده در این فیلد الزامی است"),
+        ],
+        render_kw={
+            "class": "form-control"
+        }
+    )
+
+    SearchBox = StringField(
+        validators=[
+            InputRequired(message="ورود داده در این فیلد الزامی است"),
+            DataRequired(message="ورود داده در این فیلد الزامی است"),
+        ],
+        render_kw={
+            "class":"form-control"
+        }
+    )
 
     Submit = SubmitField()

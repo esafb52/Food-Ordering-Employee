@@ -16,7 +16,7 @@
                 {{ form.hidden_tag() }}
                 <div class="my-3">
                     <label for="Name">نام غذا:</label>
-                    {{ form.Name(id="Name",class="form-control", placeholder="نام غذا را وارد نمایید") }}
+                    {{ form.Name() }}
                     {% if form.Name.errors %}
                         <ul>
                             {% for err in form.Name.errors %}
@@ -28,7 +28,7 @@
 
                 <div class="my-3">
                     <label for="Description">توضیحات غذا:</label>
-                    {{ form.Description(id="Description",class="form-control", placeholder="توضیحات غذا را وارد نمایید") }}
+                    {{ form.Description() }}
                     {% if form.Description.errors %}
                         <ul>
                             {% for err in form.Description.errors %}
@@ -39,7 +39,7 @@
                 </div>
                 <div class="my-3">
                     <label for="Images">تصاویر غذا:</label>
-                    {{ form.Images(id="Images",class="form-control") }}
+                    {{ form.Images() }}
                     {% if form.Images.errors %}
                         <ul>
                             {% for err in form.Images.errors %}
