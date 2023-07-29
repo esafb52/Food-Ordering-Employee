@@ -93,11 +93,31 @@
                 </div>
             </div>
     </div>
+
+
+{#    charts #}
+
+<div class="col-12  my-4 px-3">
+    <div>
+        <h3 class="text-center">نمودار سفارشات سامانه در یک هفته اخیر</h3>
+    </div>
+    <div>
+        <canvas id="test-chart" class="w-100 h-100"></canvas>
+    </div>
 </div>
+
+
+{#    end of charts #}
+
+</div>
+<input type="hidden" id="token" name="token" value="{{ csrf_token() }}">
 
 {% endblock  %}
 
 {% block admin_script %}
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs"></script>
+    <script src="{{ url_for('admin.AdminStatic', filename='js/index.js') }}"></script>
 {% endblock %}
 
 

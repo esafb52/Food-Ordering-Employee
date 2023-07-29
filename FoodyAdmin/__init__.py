@@ -18,6 +18,7 @@ def admin_context():
     return func
 
 # apps:
+import FoodyAdmin.api
 import FoodyAdmin.Apps.ManageUsers.views
 import FoodyAdmin.Apps.ManageFoods.views
 import FoodyAdmin.Apps.Accounting.views
