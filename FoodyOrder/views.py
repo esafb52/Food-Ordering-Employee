@@ -5,7 +5,7 @@ from flask import jsonify, request
 from FoodyOrder import order
 from FoodyCore.utils import TimeStamp
 from FoodyOrder.model import Day, FoodList, Order
-from FoodyConfig.config import VALID_DAYS_PERSIAN
+from FoodyConfig.config import VALID_DAYS_PERSIAN,MAX_ORDER_TIMEOUT_DAY
 from FoodyAuth.AccessControl.decorators import login_required
 
 from FoodyCore.extension import db
@@ -29,7 +29,7 @@ def GetMenuDays():
     week = []
 
     # move 7 days from this day
-    for each in range(0, 7):
+    for each in range(0, MAX_ORDER_TIMEOUT_DAY):
         d = today + datetime.timedelta(days=each) # target day
         p = d.strftime("%A")  # in persian string date
 
@@ -46,41 +46,6 @@ def GetMenuDays():
     return jsonify(week), 200
 
 
-@order.route("/GetDayFood/", methods=["POST"])
-@login_required
-def GetDayFood():
-    """
-
-        this  view take a persian string date and return all foods that related to that day
-        params: formdata('day'):a jalali calender date
-    """
-    day = request.form.get("day", None, type=str)
-    if not day:
-        return jsonify({"status": "failed", "error":"invalid params"}), 400
-
-    try:
-        day = khayyam.JalaliDate(*day.split("-"))
-    except:
-        return jsonify({"status": "failed", "error": "invalid day"}), 400
-
-    if not( DayDb := Day.query.filter_by(NameFa=day.strftime("%A")).first()):
-        return jsonify({"status": "failed", "error": "invalid day"}), 400
-
-
-    Foods = FoodList.query.filter(FoodList.DayOfReserve.contains(DayDb)).filter(FoodList.Active == True).all()
-    foodJson = []
-    t = TimeStamp()
-    for each in Foods:
-        OrderDateGeorgian = t.convert_jlj2_georgian_d(value=day) # convert jalali to georgian
-        temp = {}
-        temp["images"] = each.GetAllImages()
-        temp["name"] = each.Name
-        temp["caption"] = each.Description
-        temp["food-key"] = each.GetPublicKey()
-        temp["is_ordered"] = True if Order.query.filter(Order.OrderDate == OrderDateGeorgian).filter(Order.UserID == request.user_object.id).filter(Order.FoodID == each.id).first() else False
-        foodJson.append(temp)
-
-    return jsonify({"status":"success", "data": foodJson}), 200
 
 
 
@@ -114,7 +79,7 @@ def Register_New_Order_Post():
     if day < today:
         return jsonify({"status": "failed", "error": "روز انتخابی باشد از تاریخ امروز بیشتر باشد"}), 400
 
-    if day > today + datetime.timedelta(days=6):
+    if day > today + datetime.timedelta(days=MAX_ORDER_TIMEOUT_DAY):
         return jsonify({"status": "failed", "error": "محمدوده سفارشات غذا باید بین امروز تا 7 روز آینده باشد"}), 400
 
     if not( DayDb := Day.query.filter_by(NameFa=day.strftime("%A")).first()): # getting food object
@@ -157,6 +122,42 @@ def Register_New_Order_Post():
 
     return jsonify({'status': 'success', 'message': 'سفارش با موفقیت انجام شد'}), 200
 
+
+@order.route("/GetDayFood/", methods=["POST"])
+@login_required
+def GetDayFood():
+    """
+
+        this  view take a persian string date and return all foods that related to that day
+        params: formdata('day'):a jalali calendar date
+    """
+    day = request.form.get("day", None, type=str)
+    if not day:
+        return jsonify({"status": "failed", "error":"invalid params"}), 400
+
+    try:
+        day = khayyam.JalaliDate(*day.split("-"))
+    except:
+        return jsonify({"status": "failed", "error": "invalid day"}), 400
+
+    if not( DayDb := Day.query.filter_by(NameFa=day.strftime("%A")).first()):
+        return jsonify({"status": "failed", "error": "invalid day"}), 400
+
+
+    Foods = FoodList.query.filter(FoodList.DayOfReserve.contains(DayDb)).filter(FoodList.Active == True).all()
+    foodJson = []
+    t = TimeStamp()
+    for each in Foods:
+        OrderDateGeorgian = t.convert_jlj2_georgian_d(value=day) # convert jalali to georgian
+        temp = {}
+        temp["images"] = each.GetAllImages()
+        temp["name"] = each.Name
+        temp["caption"] = each.Description
+        temp["food-key"] = each.GetPublicKey()
+        temp["is_ordered"] = True if Order.query.filter(Order.OrderDate == OrderDateGeorgian).filter(Order.UserID == request.user_object.id).filter(Order.FoodID == each.id).first() else False
+        foodJson.append(temp)
+
+    return jsonify({"status":"success", "data": foodJson}), 200
 
 
 @order.route("/cancel/", methods=["POST"])

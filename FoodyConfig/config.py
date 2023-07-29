@@ -27,6 +27,8 @@ NAME_DB = os.environ.get('DATABASE_NAME')
 DATABASE_TABLE_PREFIX = os.environ.get("DATABASE_TABLE_PREFIX", "FOODY_")
 
 
+MAX_ORDER_TIMEOUT_DAY = 7
+# this is the default for showing ordering food that means user only can order for only a week ahead
 
 
 # this variables hold some special location for saving or serving static files

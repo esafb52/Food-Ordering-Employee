@@ -156,7 +156,9 @@ function watchRegisterOrderButtons(){
                     confirmButtonText: 'فهمیدم',
 
                 }).then(e=>{
-                    if(e.isConfirmed){window.location.reload()}
+                    if(e.isConfirmed){
+                        //window.location.reload()
+                    }
                 })
             }else{
                     Swal.fire({
@@ -165,8 +167,10 @@ function watchRegisterOrderButtons(){
                     icon:"success",
                     confirmButtonText: 'فهمیدم',
 
-                }).then(e=>{
-                    if(e.isConfirmed){window.location.reload()}
+                }).then( async(e) =>{
+                    if(e.isConfirmed){
+                        window.location.reload()
+                    }
                 })
             }
         })
