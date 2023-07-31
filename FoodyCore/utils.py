@@ -186,8 +186,12 @@ class TimeStamp:
 
 
     def convert_string_jalali2_dateD(self, value:str)->datetime.date:
+        """
+            this Method converts a string (Persian Date) to datetime.date object
+        """
         if not self.is_persian_date(value):
             raise ValueError("Input is not a valid date format YYYY/MM/DD")
+
         value = value.split("/")
         jDate = khayyam.JalaliDate(year=value[0], month=value[1], day=value[2])
         return self.convert_jlj2_georgian_d(jDate)

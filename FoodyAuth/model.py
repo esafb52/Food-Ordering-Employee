@@ -82,3 +82,4 @@ class Section(BaseModel):
     Description = Column(String(512), nullable=False, unique=False)
 
 
+    users = db.relationship("User", backref='GetSection')
