@@ -5,7 +5,7 @@ import FoodyOrder.model
 from FoodyAuth.model import Section
 from FoodyCore import app
 from FoodyCore.utils import TimeStamp
-from FoodyOrder.model import FoodList
+from FoodyOrder.model import FoodList, Day
 from FoodyAuth.model import User
 
 
@@ -26,12 +26,11 @@ def SectionName(SectionID: int) -> str:
 
 
 @app.template_filter("GetDayName")
-def GetDayName(days: FoodyOrder.model.Day) -> str:
-    """This Filter Get a list like object of days and return name of each day"""
-    d = []
-    for each in days:
-        d.append(each.NameFa)
-    return "-".join(d)
+def GetDayName(day : Day.id) -> str:
+    """
+    this Filter Take a Day_ID and return Day.Name
+    """
+    return Day.query.filter(Day.id == day).first().NameFa or "NULL"
 
 
 @app.template_filter("GetFoodName")
