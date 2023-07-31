@@ -27,11 +27,7 @@ window.addEventListener("DOMContentLoaded", async (e)=>{
 
     })
 
-    create_chart(
-     document.querySelector("#test-chart"),
-    "line",
 
-    )
 })
 
 function create_chart(ctx, type, xValues, yValues, label, borderColor){

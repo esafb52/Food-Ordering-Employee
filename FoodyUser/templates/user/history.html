@@ -1,6 +1,13 @@
 {% extends "user/base.html" %}
 
 {% block style %}
+    <style>
+        @media (max-width: 648px){
+            .hide-in-mobile{
+                display: none !important;
+            }
+        }
+    </style>
 {% endblock %}
 
 {% block title %}سابقه سفارشات{% endblock %}
@@ -19,7 +26,7 @@
                         <th class="text-center">Action</th>
                         <th>تاریخ</th>
                         <th>غذا</th>
-                        <th>ردیف</th>
+                        <th class="hide-in-mobile">ردیف</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,7 +50,7 @@
                                 </td>
                                 <td>{{ order.OrderDate | GetPersianDate }} </td>
                                 <td>{{ order.FoodID | GetFoodName }}</td>
-                                <td>{{ loop.index }}</td>
+                                <td class="hide-in-mobile">{{ loop.index }}</td>
                             </tr>
                         {% endfor %}
                     {% endif %}

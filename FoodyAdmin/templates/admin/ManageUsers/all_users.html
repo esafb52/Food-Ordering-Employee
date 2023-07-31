@@ -5,6 +5,14 @@
 {%  endblock %}
 
 {%  block admin_style %}
+
+    <style>
+    @media (max-width:  840px){
+        .hide-in-mobile{
+            display: none !important;
+        }
+    }
+    </style>
 {%  endblock %}
 
 {% block main_content %}
@@ -18,12 +26,12 @@
                 <tr>
 <!--                    <th>#</th>-->
                     <th>نام و نام خانوادگی</th>
-                    <th>نام کاربری</th>
+                    <th class="hide-in-mobile">نام کاربری</th>
                     <th>شماره کارمندی</th>
-                    <th>وضعیت حساب کاربری</th>
-                    <th>بخش کاری</th>
-                    <th>شماره تماس</th>
-                    <th>تاریخ ساخت اکانت</th>
+                    <th >وضعیت حساب کاربری</th>
+                    <th class="hide-in-mobile">بخش کاری</th>
+                    <th class="hide-in-mobile">شماره تماس</th>
+                    <th class="hide-in-mobile">تاریخ ساخت اکانت</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -33,7 +41,7 @@
                         <tr class="text-center">
 <!--                            <td>#</td>-->
                             <td>{{user.FirstName + " " + user.LastName}}</td>
-                            <td>{{user.Username}}</td>
+                            <td class="hide-in-mobile">{{user.Username}}</td>
                             <td>{{user.EmployeeCode}}</td>
                             <td class="text-center">
                                 {% if user.Active %}
@@ -44,20 +52,23 @@
                                     <p  class="btn btn-outline-danger w-100 m-0">غیرفعال</p>
                                 {% endif %}
                             </td>
-                            <td> <button class="btn btn-outline-info w-100">{{ user.SectionID | SectionName }}</button> </td>
-                            <td>{{ user.PhoneNumber }}</td>
-                            <td>{{ user.CreatedTime | Convert2Persian }}</td>
+                            <td class="hide-in-mobile"> <button class="btn btn-outline-info w-100">{{ user.SectionID | SectionName }}</button> </td>
+                            <td class="hide-in-mobile">{{ user.PhoneNumber }}</td>
+                            <td class="hide-in-mobile">{{ user.CreatedTime | Convert2Persian }}</td>
                             <td>
                                 <div class="btn-group dropup w-100">
                                   <button type="button" class="btn btn-primary w-100 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     عملیات
                                   </button>
                                   <ul class="dropdown-menu">
+
+                                      <li><a class="dropdown-item" href="#">مشاهده</a></li>
+                                      <li><hr class="dropdown-divider m-0 p-0"></li>
+                                      <li><a class="dropdown-item" href="{{url_for('admin.edit_user', userKey=user.PublicKey)}}">ویرایش</a></li>
+                                      <li><hr class="dropdown-divider p-0 m-0"></li>
                                       <li><a class="dropdown-item" href="#">حذف</a></li>
                                       <li><hr class="dropdown-divider p-0 m-0"></li>
-                                      <li><a class="dropdown-item" href="{{url_for('admin.edit_user', userKey=user.PublicKey)}}">ویرایش</a></li>
-                                      <li><hr class="dropdown-divider m-0 p-0"></li>
-                                      <li><a class="dropdown-item" href="#">مشاهده</a></li>
+                                      <li><a class="dropdown-item" href="#">سفارشات این ماه</a></li>
                                   </ul>
                                 </div>
                             </td>
