@@ -1,4 +1,39 @@
 
+
+async function GetOrdersInfo(start, end){
+
+    let response = await fetch(`/admin/api/AllOrders/?from=${start.toString()}&end=${end.toString()}`, {
+        method:"GET",
+        headers :{
+            "X-CSRFToken": document.querySelector("#token").value
+        }
+    })
+    let data = (await response).json()
+    return data
+}
+
+
+window.addEventListener("DOMContentLoaded", async (e)=>{
+    const today = moment().toISOString();
+    const PreWeek = moment().subtract(1, 'week').toISOString();
+    let response = await GetOrdersInfo(today, PreWeek)
+
+    let xValues = []
+    let yValues = []
+    console.log(response)
+    Array.from(response.data).forEach((value, index)=>{
+
+        console.log(value)
+
+    })
+
+    create_chart(
+     document.querySelector("#test-chart"),
+    "line",
+
+    )
+})
+
 function create_chart(ctx, type, xValues, yValues, label, borderColor){
      let data = {
       labels: xValues,
@@ -21,23 +56,3 @@ function create_chart(ctx, type, xValues, yValues, label, borderColor){
 
     return new Chart(ctx, config)
 }
-
-async function GetOrdersInfo(start, end){
-
-    let response = await fetch(`/admin/api/AllOrders/?from=${start.toString()}&end=${end.toString()}`, {
-        method:"GET",
-        headers :{
-            "X-CSRFToken": document.querySelector("#token").value
-        }
-    })
-    let data = (await response).json()
-    return data
-}
-
-
-window.addEventListener("DOMContentLoaded", async (e)=>{
-    const today = moment().toISOString();
-    const PreWeek = moment().subtract(1, 'week').toISOString();
-    let response = await GetOrdersInfo(today, PreWeek)
-
-})
