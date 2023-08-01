@@ -38,6 +38,30 @@
       </div>
 
         <div class="col-11">
+            <h3 class="text-center">آمار کلی بر اساس بخش ها</h3>
+            <table dir="rtl" class="table table-responsive table-dark table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>بخش</th>
+                        <th>تعداد سفارشات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if ctx.sections_order %}
+                        {% for section in ctx.sections_order %}
+                            <tr>
+                                <td>{{ section }}</td>
+                                <td>{{ ctx.sections_order[section] }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <h3 class="text-center">سفارشی برای هیچ کدام از بخش ها برای امروز یافت نشد</h3>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-11">
 
             <table dir="rtl" class="table table-responsive table-dark table-bordered table-hover">
 

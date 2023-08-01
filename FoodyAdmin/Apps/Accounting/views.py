@@ -20,12 +20,29 @@ TEMPLATE_FOLDER = "admin/Accounting"
 @admin.route(f"{BASE_URL}/Report/", methods=["GET"])
 @admin_login_required
 def report_today_get():
+    """
+    This view report today orders
+    """
+    today = datetime.date.today()
+
+    today_orders = Order.query.filter(Order.OrderDate == today).all()
+    all_sections = db.session.query(Section.id).distinct().all()
+
+    sections_order = {}
+    for each in all_sections:
+        section = Section.query.get(each[0])
+        Specified_section_today_orders = Order.query.join(User, Order.UserID == User.id)\
+            .filter(User.SectionID == each[0])\
+            .filter(Order.OrderDate == today).count()
+        if section and Specified_section_today_orders:
+            sections_order[section.Name] = Specified_section_today_orders
+
     ctx={
         "report_today": "item-active",
         "accounting": "show",
-        "today_orders": Order.query.filter(Order.OrderDate == datetime.date.today()).all()
+        "today_orders": today_orders,
+        "sections_order":sections_order
     }
-
     ctx["total_orders"] = len(ctx["today_orders"])
 
     return render_template(f"{TEMPLATE_FOLDER}/report_today.html", ctx=ctx)
