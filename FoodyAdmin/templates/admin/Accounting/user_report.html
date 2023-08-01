@@ -3,7 +3,7 @@
 
 
 {% block title %}
-      گزارش امروز سفارشات
+جستجو سفارشات کاربران
 {% endblock %}
 
 
@@ -15,16 +15,16 @@
     <div class="row justify-content-center align-items-center">
 
         <div class="col-11 my-3">
-              <h4 class="text-center my-2 mt-4">گزارش بر اساس <span class="text-danger">بخش</span></h4>
+              <h4 class="text-center my-2 mt-4">گزارش بر اساس <span class="text-danger">کاربر</span></h4>
               <div class="d-flex justify-content-between align-items-center my-4">
               </div>
           </div>
 
             <div class="col-11">
-                <form method="post" action="{{ url_for('admin.report_section_post') }}" dir="rtl">
+                <form method="post" action="{{ url_for('admin.report_user_post') }}" dir="rtl">
                     {{ form.hidden_tag() }}
-                    <label class="my-2 w-100">بخش مورد نظر
-                        {{ form.Sections() }}
+                    <label class="my-2 w-100">کد کارمندی
+                        {{ form.EmployeeCode() }}
                     </label>
                     <label class="my-2 w-100">از تاریخ
                         {{ form.StartDate() }}

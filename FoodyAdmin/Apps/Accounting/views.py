@@ -83,12 +83,6 @@ def report_section_post():
     if not form.validate():
         return redirect(request.referrer)
 
-    if form.Sections.data != "all":
-        SectionDb = Section.query.filter_by(PublicKey=form.Sections.data).first()
-        if not SectionDb:
-            flash("بخش مورد نظر به درستی وارد نشده است", "danger")
-            return redirect(request.referrer)
-
     if not form.validate_dates():
         flash("تاریخ به درستی وارد نشده است", "danger")
         return redirect(request.referrer)
@@ -99,14 +93,75 @@ def report_section_post():
         flash("تاریخ شروع نمی تواند از تاریخ انتهایی بزرگتر باشد", "danger")
         return redirect(request.referrer)
 
-    Orders = Order.query.join(User, Order.UserID == User.id).filter(User.SectionID == SectionDb.id).filter(Order.OrderDate >= startDate)\
-        .filter(Order.OrderDate <= endDate).all()
+    if form.Sections.data != "all":
+        SectionDb = Section.query.filter_by(PublicKey=form.Sections.data).first()
+        if not SectionDb:
+            flash("بخش مورد نظر به درستی وارد نشده است", "danger")
+            return redirect(request.referrer)
+
+        Orders = Order.query.order_by(Order.OrderDate.desc()).join(User, Order.UserID == User.id).filter(User.SectionID == SectionDb.id).filter(Order.OrderDate >= startDate)\
+            .filter(Order.OrderDate <= endDate).all()
+        ctx["section"] = SectionDb.Name
+
+    else:
+        Orders = Order.query.order_by(Order.OrderDate.desc()).join(User, Order.UserID == User.id).filter(Order.OrderDate >= startDate)\
+            .filter(Order.OrderDate <= endDate).all()
+        ctx["section"] = "تمام بخش ها"
+
 
     ctx["orders"] = Orders
-    ctx["section"] = SectionDb.Name
     ctx["total_orders"] = len(Orders)
     ctx["from"] = form.StartDate.data
     ctx["end"] = form.EndDate.data
 
 
     return render_template(f"{TEMPLATE_FOLDER}/report_section_result.html", ctx=ctx, form=form)
+
+
+
+@admin.route(f"{BASE_URL}/Report/User/", methods=["GET"])
+@admin_login_required
+def report_user_get():
+    ctx = {
+        "user_report": "item-active",
+        "accounting": "show",
+    }
+    form= AccountingForms.ReportUserForm()
+    return render_template(f"{TEMPLATE_FOLDER}/user_report.html", ctx=ctx, form=form)
+
+
+@admin.route(f"{BASE_URL}/Report/User/", methods=["POST"])
+@admin_login_required
+def report_user_post():
+    ctx = {
+        "user_report": "item-active",
+        "accounting": "show",
+    }
+    form = AccountingForms.ReportUserForm()
+    if not form.validate():
+        flash("برخی موارد مقدار دهی اولیه نشده اند", "danger")
+        return redirect(request.referrer)
+
+    EmployeeDb = User.query.filter_by(EmployeeCode=form.EmployeeCode.data).first()
+    if not EmployeeDb:
+        flash("کاربری با کد کارمندی وارد شده یافت نشد", "danger")
+        return redirect(request.referrer)
+
+
+    if not form.validate_dates():
+        flash("تاریخ به درستی وارد نشده است", "danger")
+        return redirect(request.referrer)
+
+    startDate, endDate = form.GetGeorgianDates()
+
+    Orders = Order.query.order_by(Order.OrderDate.desc()).join(User, Order.UserID == EmployeeDb.id).filter(Order.OrderDate >= startDate) \
+        .filter(Order.OrderDate <= endDate).all()
+
+    ctx["total_orders"] = len(Orders)
+    ctx["orders"] = Orders
+    ctx["user"] = EmployeeDb
+    ctx["from"] = startDate
+    ctx["end"] = endDate
+
+
+    return render_template(f"{TEMPLATE_FOLDER}/user_report_result.html", ctx=ctx, form=form)

@@ -129,7 +129,7 @@
                                                 <span>گزارش بخش به بخش</span>
 
                                             </a>
-                                            <a href="" class="d-block px-3 py-2 my-2 text-white text-decoration-underline hover-item">
+                                            <a href="{{ url_for('admin.report_user_get') }}" class="d-block px-3 py-2 my-2 text-white text-decoration-underline hover-item {{ ctx.user_report }}">
                                                 <i class="bi bi-binoculars-fill mx-2 text-warning fs-5"></i>
                                                 <span>گزارش منحصر به فرد</span>
                                             </a>

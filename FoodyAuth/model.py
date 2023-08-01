@@ -25,6 +25,9 @@ class User(BaseModel):
 
     Orders = db.relationship("Order", backref='GetUser')
 
+    def GetUserName(self):
+        return f"{self.FirstName} {self.LastName}"
+
     def SetPassword(self, password:str) -> None:
         """ Set Hashed Password for user """
         self.Password = generate_password_hash(password)
