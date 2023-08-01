@@ -73,6 +73,15 @@ class User(BaseModel):
             self.EmployeeCode = code
             return True
 
+    def SetEmailAddress(self, email:str) -> bool:
+        """Set Unique Email Address For User"""
+        if self.query.filter_by(Email=email).first():
+            return False
+        else:
+            self.Email = email
+            return True
+
+
 
 class Section(BaseModel):
     """This table Hold Sections"""

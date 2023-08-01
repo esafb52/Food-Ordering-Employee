@@ -74,9 +74,17 @@ def add_new_users_post():
 
 
     NewUser = User()
+
     if not NewUser.SetUsername(form.Username.data):
         flash("خطایی هنگام تنظیم نام کاربری کاربر رخ داد / احتمالا نام کاربری توسط کاربر دیگری انتخاب شده است", "danger")
         return render_template(f'{TEMPLATE_FOLDER}/add_new_user.html', ctx=ctx, form=form)
+
+    if form.Email.data:
+        print("Here")
+        if not NewUser.SetEmailAddress(form.Email.data):
+            print("Here 123")
+            flash("آدرس ایمیل کاربر تکراری می باشد\nلطفا آدرس ایمیل یکتایی برای کاربر وارد کنید", "danger")
+            return render_template(f'{TEMPLATE_FOLDER}/add_new_user.html', ctx=ctx, form=form)
 
 
     NewUser.SetPublicKey()

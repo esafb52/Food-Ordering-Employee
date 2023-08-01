@@ -1,13 +1,13 @@
 {% extends "admin/base.html" %}
 
 {% block title %}
-اضافه کردن کاربر جدید به سامانه
+لیست تمام کاربران سامانه
 {%  endblock %}
 
 {%  block admin_style %}
 
     <style>
-    @media (max-width:  840px){
+    @media (max-width:  910px){
         .hide-in-mobile{
             display: none !important;
         }
@@ -40,7 +40,7 @@
                     {% for user in ctx.users %}
                         <tr class="text-center">
 <!--                            <td>#</td>-->
-                            <td>{{user.FirstName + " " + user.LastName}}</td>
+                            <td>{{ (user.FirstName + " " + user.LastName) | truncate(14, True, " ...") }}</td>
                             <td class="hide-in-mobile">{{user.Username}}</td>
                             <td>{{user.EmployeeCode}}</td>
                             <td class="text-center">

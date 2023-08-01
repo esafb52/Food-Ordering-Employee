@@ -68,14 +68,21 @@
                     <div class="card-header">
                             <h3 class="text-center pt-2">امور ارتباطی</h3>
                             <p class="text-center">
-                                لطفا از صحت ایمیل خود اطمینان حاصل فرمایید زیرا فاکتور دیجیتال در انتهای هر ماه به ایمیل ثبت شده ارسال خواهد شد
-                                . در صورت مغایرت  با پشتیبانی ارتباط بر قرار کنید
+
                             </p>
                     </div>
-                       <label class="py-2 px-3">
-                            <span class="fs-5 text-muted">ایمیل </span>
-                            <input disabled class="form-control" dir="ltr" value="{{ ctx.user.Email }}" >
-                        </label>
+                        <div class="w-100">
+                             <form action="{{ url_for('user.panel_post') }}" method="POST" class="w-100">
+                               <label class="py-2 px-3 w-100">
+                                    <span class="fs-5 text-muted">ایمیل </span>
+                                   {{ form.Email() }}
+                                </label>
+                                 {{ form.hidden_tag() }}
+                                 <label class=" px-3 w-100">
+                                    {{ form.Submit() }}
+                                </label>
+                            </form>
+                        </div>
 
                         <label class="py-2 px-3">
                             <span class="fs-5 text-muted">شماره تماس</span>
