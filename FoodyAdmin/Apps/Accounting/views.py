@@ -88,5 +88,8 @@ def report_section_post():
     ctx["orders"] = Orders
     ctx["section"] = SectionDb.Name
     ctx["total_orders"] = len(Orders)
+    ctx["from"] = form.StartDate.data
+    ctx["end"] = form.EndDate.data
+
 
     return render_template(f"{TEMPLATE_FOLDER}/report_section_result.html", ctx=ctx, form=form)
