@@ -89,8 +89,8 @@ if STATUS:
     SMS_API = None
     SMS_LINE = None
 else:
-    SMS_API = os.environ.get("SMS-API-KEY")
-    SMS_LINE = os.environ.get("SMS-LINE-NUMBER")
+    SMS_API = os.environ.get("SMS_API_KEY")
+    SMS_LINE = os.environ.get("SMS_LINE_NUMBER")
 
 
 
