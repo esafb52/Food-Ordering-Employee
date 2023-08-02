@@ -5,12 +5,17 @@
 {%  endblock %}
 
 {% block admin_style %}
+    <style>
+        .card-index{
+            z-index: -1 !important;
+        }
+    </style>
 {% endblock %}
 
 {% block main_content %}
 <div class="row justify-content-center align-items-center my-3">
     <div class="col-lg-3 col-md-6 col-12 my-2">
-            <div class="card shadow hover-card">
+            <div class="card shadow hover-card card-index">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center flex-row-reverse">
                         <div class="text-center">
@@ -31,7 +36,7 @@
             </div>
     </div>
     <div class="col-lg-3 col-md-6 col-12 my-2">
-            <div class="card shadow hover-card">
+            <div class="card shadow hover-card card-index" >
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center flex-row-reverse">
                         <div class="text-center">
@@ -52,7 +57,7 @@
             </div>
     </div>
     <div class="col-lg-3 col-md-6 col-12 my-2">
-            <div class="card shadow hover-card">
+            <div class="card shadow hover-card card-index">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center flex-row-reverse">
                         <div class="text-center">
@@ -73,7 +78,7 @@
             </div>
     </div>
     <div class="col-lg-3 col-md-6 col-12 my-2">
-            <div class="card shadow hover-card">
+            <div class="card shadow hover-card card-index">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center flex-row-reverse">
                         <div class="text-center">
@@ -97,7 +102,7 @@
 
 {#    charts #}
 
-<div class="col-lg-6 col-md-11 col-12 my-4 px-3">
+<div class="col-lg-6 col-md-11 col-12 my-5 px-3">
     <div>
         <h3 class="text-center">نمودار سفارشات سامانه در یک هفته اخیر</h3>
     </div>
@@ -106,12 +111,21 @@
     </div>
 </div>
 
-<div class="col-lg-6 col-md-11 col-12 my-4 px-3">
+<div class="col-lg-6 col-md-11 col-12 my-5 px-3">
     <div>
         <h3 class="text-center">نمودار سفارشات سامانه در یک هفته اخیر</h3>
     </div>
     <div>
         <canvas id="one-week-orders-section" class="w-100 h-100"></canvas>
+    </div>
+</div>
+
+<div class="col-lg-6 col-md-11 col-12 my-5 px-3">
+    <div>
+        <h3 class="text-center">کل کاربران سامانه</h3>
+    </div>
+    <div>
+        <canvas id="all_users_info" class="w-100 h-100"></canvas>
     </div>
 </div>
 

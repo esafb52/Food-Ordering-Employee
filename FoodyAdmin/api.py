@@ -59,7 +59,7 @@ def All_Orders_Sections_API():
     Etime = request.args.get("end", type=str, default=None)
 
     if not Ftime or not Etime:
-        return jsonify({}), 400
+        return jsonify({"status": "failed", "error": "invalid params"}), 400
 
     try:
         f = datetime.datetime.strptime(Ftime,"%Y-%m-%dT%H:%M:%S.%fZ")
@@ -99,4 +99,12 @@ def All_Users_Info():
 
     AllSections = db.session.query(Section.id, Section.Name).distinct().all()
 
-    
+    data = []
+    for sectionID, sectionName in AllSections:
+        temp = {}
+        sectionCount = User.query.filter_by(SectionID=sectionID).count()
+        temp["section_name"] = sectionName
+        temp["section_users"] = sectionCount
+        data.append(temp)
+
+    return jsonify({"status":"success", "data": data}), 200
