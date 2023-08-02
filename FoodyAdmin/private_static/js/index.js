@@ -11,13 +11,27 @@ function generateRGBString(round) {
 }
 
 
-async function GetOrdersInfo(start, end){ // this function get a week ago orders info in whole app
-    let response = await fetch(`/admin/api/AllOrders/?from=${start.toString()}&end=${end.toString()}`, {
+async function query_fetch(start, end, url){
+    let response = null
+    if (!start || !end){
+        response = await fetch(`/admin/${url}/`, {
         method:"GET",
         headers :{
             "X-CSRFToken": document.querySelector("#token").value
-        }
-    })
+            }
+        })
+    }
+    else{
+        response = await fetch(`/admin/${url}/?from=${start.toString()}&end=${end.toString()}`, {
+        method:"GET",
+        headers :{
+            "X-CSRFToken": document.querySelector("#token").value
+            }
+        })
+
+    }
+    // let response = await fetch(`/admin/api/AllOrders/?from=${start.toString()}&end=${end.toString()}`, {
+
     let data = (await response).json()
     if (response.status == 200){
         return data
@@ -44,39 +58,21 @@ async function GetAllUsersInfo(){ // this function get all users info by section
 }
 
 
-async function GetSectionOrdersInfo(start, end){ // this function get each section a week ago orders info in whole app
-
-    let response = await fetch(`/admin/api/AllOrders/Sections/?from=${start.toString()}&end=${end.toString()}`, {
-        method:"GET",
-        headers :{
-            "X-CSRFToken": document.querySelector("#token").value
-        }
-    })
-    let data = (await response).json()
-    if (response.status == 200){
-        return data
-    }
-    else{
-        return []
-    }
-}
 
 
 window.addEventListener("DOMContentLoaded", async (e)=>{
     const Today = moment().toISOString();
     const PreWeek = moment().subtract(1, 'week').toISOString();
 
-    let GetOrdersInfo_response = await GetOrdersInfo(Today, PreWeek);
-    let GetSectionOrdersInfo_response = await GetSectionOrdersInfo(Today, PreWeek);
-    let GetAllUsersInfo_response = await GetAllUsersInfo();
+    let GetOrdersInfo_response = await query_fetch(Today, PreWeek, "api/AllOrders");
+    let GetSectionOrdersInfo_response = await query_fetch(Today, PreWeek, "api/AllOrders/Sections");
+    let GetAllUsersInfo_response = await query_fetch(start=null, end=null,url="api/All/Users");
 
     let xValues = []
     let yValues = []
     for (const value of GetOrdersInfo_response.data) {
-        for (const valueElement in value) {
-            xValues.push(valueElement)
-            yValues.push(value[valueElement])
-        }
+        xValues.push(value["date"])
+        yValues.push(value["order_count"])
     }
 
     create_line_chart(

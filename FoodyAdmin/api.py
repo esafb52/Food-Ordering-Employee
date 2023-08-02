@@ -2,10 +2,12 @@ import datetime
 
 from flask import request, jsonify
 from FoodyAdmin import admin
+from FoodyCore.utils import TimeStamp
 from FoodyAuth.AccessControl.decorators import admin_login_required
 from FoodyOrder.model import Order
 from FoodyCore.extension import db
 from FoodyAuth.model import Section, User
+from sqlalchemy import func
 
 
 
@@ -36,13 +38,17 @@ def All_Orders_API():
 
     f = f.date()
     e = e.date()
+    timeHandler = TimeStamp()
 
     data = []
     for each in range(0, (f-e).days):
         time = f + datetime.timedelta(days=each)
         temp = {}
         query = Order.query.filter(Order.OrderDate == time).count()
-        temp[str(time)] = query
+
+        time = timeHandler.convert_grg2_jalali_d(time)
+        temp["date"] = f"{str(time)} {time.strftime('%A')}"
+        temp["order_count"] = query
         data.append(temp)
 
     return jsonify({"status":"success", "data": data}), 200
@@ -92,7 +98,7 @@ def All_Orders_Sections_API():
 
 @admin.route("/api/All/Users/", methods=["GET"])
 @admin_login_required
-def All_Users_Info():
+def All_Users_Info_API():
     """
     this view return an info about all user and how many user each section have
     """
@@ -105,6 +111,39 @@ def All_Users_Info():
         sectionCount = User.query.filter_by(SectionID=sectionID).count()
         temp["section_name"] = sectionName
         temp["section_users"] = sectionCount
+        data.append(temp)
+
+    return jsonify({"status":"success", "data": data}), 200
+
+
+@admin.route("/api/Top/User/Order/", methods=["GET"])
+@admin_login_required
+def Top_Five_User_Order_API():
+    """
+        this view return top 5 user with most ordered food in last month
+    """
+    today = datetime.date.today()
+    last_month = today + datetime.timedelta(days=31)
+
+    TopFiveUsers = db.session.query(Order.UserID, db.func.count(Order.UserID).label('order_count')) \
+                    .group_by(Order.UserID) \
+                    .order_by(func.count(Order.UserID).desc()) \
+                    .limit(5) \
+                    .all()
+    try:
+        TopFiveUsers = [(User.query.get(each[0]), each[1]) for each in TopFiveUsers]
+    except Exception as e:
+        print(e)
+        TopFiveUsers = []
+
+
+    data = []
+    for each in TopFiveUsers:
+        user,count = each[0].GetUserName(), each[1]
+        temp = {
+            "user_name":user,
+            "order_count":count
+        }
         data.append(temp)
 
     return jsonify({"status":"success", "data": data}), 200
