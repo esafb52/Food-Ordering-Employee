@@ -97,12 +97,21 @@
 
 {#    charts #}
 
-<div class="col-12  my-4 px-3">
+<div class="col-lg-6 col-md-11 col-12 my-4 px-3">
     <div>
         <h3 class="text-center">نمودار سفارشات سامانه در یک هفته اخیر</h3>
     </div>
     <div>
-        <canvas id="test-chart" class="w-100 h-100"></canvas>
+        <canvas id="last-week-orders" class="w-100 h-100"></canvas>
+    </div>
+</div>
+
+<div class="col-lg-6 col-md-11 col-12 my-4 px-3">
+    <div>
+        <h3 class="text-center">نمودار سفارشات سامانه در یک هفته اخیر</h3>
+    </div>
+    <div>
+        <canvas id="one-week-orders-section" class="w-100 h-100"></canvas>
     </div>
 </div>
 
@@ -116,7 +125,8 @@
 
 {% block admin_script %}
     <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.min.js"></script>
+
     <script src="{{ url_for('admin.AdminStatic', filename='js/index.js') }}"></script>
 {% endblock %}
 
