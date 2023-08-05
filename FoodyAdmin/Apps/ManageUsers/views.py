@@ -40,11 +40,6 @@ def add_new_users_post():
         "add_new_user":"item-active"
     }
     form = ManageUsersForm.AddNewUserForm()
-    captcha = ServerCaptchaV2.is_verify()
-
-    if not captcha:
-        flash("ارزیابی کپچا نادرست است", "danger")
-        return render_template(f'{TEMPLATE_FOLDER}/add_new_user.html', ctx=ctx, form=form)
 
     if not form.validate():
         flash("برخی مقادیر مقدار دهی اولیه نشده اند", "danger")
@@ -150,7 +145,7 @@ def manage_users_all():
         "manage_users_all": "item-active"
     }
     page = request.args.get(key="page", type=int, default=1)
-    ctx["users"] = User.query.order_by(User.id).paginate(page=page, per_page=15)
+    ctx["users"] = User.query.order_by(User.id).paginate(page=page, per_page=13)
     ctx["current_page"] = page
     return render_template(f"{TEMPLATE_FOLDER}/all_users.html", ctx=ctx)
 

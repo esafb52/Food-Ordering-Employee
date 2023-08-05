@@ -123,13 +123,16 @@ def Top_Five_User_Order_API():
         this view return top 5 user with most ordered food in last month
     """
     today = datetime.date.today()
-    last_month = today + datetime.timedelta(days=31)
+    last_month = today + datetime.timedelta(days=-31)
 
     TopFiveUsers = db.session.query(Order.UserID, db.func.count(Order.UserID).label('order_count')) \
                     .group_by(Order.UserID) \
                     .order_by(func.count(Order.UserID).desc()) \
+                    .filter(Order.OrderDate >= last_month) \
+                    .filter(Order.OrderDate <= today) \
                     .limit(5) \
                     .all()
+
     try:
         TopFiveUsers = [(User.query.get(each[0]), each[1]) for each in TopFiveUsers]
     except Exception as e:

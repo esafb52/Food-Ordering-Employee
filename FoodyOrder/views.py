@@ -77,7 +77,7 @@ def Register_New_Order_Post():
     # check da is not less than today
     today = khayyam.JalaliDate.today()
     if day < today:
-        return jsonify({"status": "failed", "error": "روز انتخابی باشد از تاریخ امروز بیشتر باشد"}), 400
+        return jsonify({"status": "failed", "error": "امکان سفارش برای تاریخ های گذشته وجود ندارد"}), 400
 
     if day > today + datetime.timedelta(days=MAX_ORDER_TIMEOUT_DAY):
         return jsonify({"status": "failed", "error": "محمدوده سفارشات غذا باید بین امروز تا 7 روز آینده باشد"}), 400
@@ -85,8 +85,8 @@ def Register_New_Order_Post():
     if not( DayDb := Day.query.filter_by(NameFa=day.strftime("%A")).first()): # getting food object
         return jsonify({"status": "failed", "error": "تاریخی با مشخصات وارد شده یافت نشد"}), 400
 
-    if today == day and khayyam.JalaliDatetime.now().time() > datetime.time(9, 0, 0):
-        return jsonify({"status": "failed", "error": "امکان سفارش برای امروز بعد از ساعت 9 صبح، غیرفعال می باشد"}), 400
+    # if today == day and khayyam.JalaliDatetime.now().time() > datetime.time(9, 0, 0):
+    #     return jsonify({"status": "failed", "error": "امکان سفارش برای امروز بعد از ساعت 9 صبح، غیرفعال می باشد"}), 400
 
     foodDb = FoodList.query.filter_by(PublicKey=key).first() #check food key exists
     if not foodDb:

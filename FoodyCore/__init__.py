@@ -14,14 +14,11 @@ def create_app():
     ServerSession.init_app(app=app)
     ServerCaptchaV2.init_app(app)
 
-    print(ServerCaptchaV2.ENABLED)
-
     from FoodyOrder import order
     app.register_blueprint(order, url_prefix="/order")
 
     from FoodyWeb import web
     app.register_blueprint(web, url_prefix="/")
-
 
     from FoodyAuth import auth
     app.register_blueprint(auth, url_prefix="/auth")

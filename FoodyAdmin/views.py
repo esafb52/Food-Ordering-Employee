@@ -34,8 +34,35 @@ def index():
         "today_orders": Order.query.filter(Order.OrderDate == datetime.date.today()).count(),
         "all_users": User.query.count(),
         "active_users": User.query.filter(User.Active == True).count(),
-
     }
+
+
+    # from random import randint, choice
+    # from FoodyAuth.model import Section
+    # from FoodyCore.extension import db
+    # all_sections = Section.query.all()
+    #
+    # for i in range(314,999):
+    #     new_user = User()
+    #     new_user.SetPublicKey()
+    #     new_user.Active = True if randint(1,3) == 2 else False
+    #     new_user.FirstName = "User_"+str(i)
+    #     new_user.LastName = "User_"+str(i)
+    #     new_user.EmployeeCode = i+5
+    #     new_user.PhoneNumber = str(randint(111111111,99999999999+1))
+    #     new_user.SectionID = choice(all_sections).id
+    #     new_user.NationalCode = str(randint(111111111,99999999999+1))
+    #     new_user.Username = str("User_"+str(i))
+    #     new_user.SetPassword(str(i))
+    #     try:
+    #         db.session.add(new_user)
+    #         db.session.commit()
+    #     except Exception as e:
+    #         db.session.rollback()
+    #         pass
+
+
+
     return render_template("admin/index.html", ctx=ctx)
 
 

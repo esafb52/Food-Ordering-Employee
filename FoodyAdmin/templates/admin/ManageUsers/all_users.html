@@ -118,7 +118,7 @@
                         {% if ctx.users.pages - ctx.current_page > 0 %}
                             <li class="page-item">
                                 <a class="page-link"
-                                   href="{{ url_for('ctx.manage_users_all', page=ctx.current_page + 1) }}"
+                                   href="{{ url_for('admin.manage_users_all', page=ctx.current_page + 1) }}"
                                    aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>

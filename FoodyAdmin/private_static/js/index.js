@@ -67,6 +67,8 @@ window.addEventListener("DOMContentLoaded", async (e)=>{
     let GetOrdersInfo_response = await query_fetch(Today, PreWeek, "api/AllOrders");
     let GetSectionOrdersInfo_response = await query_fetch(Today, PreWeek, "api/AllOrders/Sections");
     let GetAllUsersInfo_response = await query_fetch(start=null, end=null,url="api/All/Users");
+    let Top5Usersinfo_response = await query_fetch(start=null, end=null, url="/api/Top/User/Order/")
+
 
     let xValues = []
     let yValues = []
@@ -115,6 +117,26 @@ window.addEventListener("DOMContentLoaded", async (e)=>{
     "کل کاربران سامانه",
     )
 
+
+    xValues = []
+    yValues = []
+    console.log(Top5Usersinfo_response)
+    for (const Value of Top5Usersinfo_response.data) {
+        xValues.push(Value["user_name"])
+        yValues.push(Value["order_count"])
+        console.log(Value)
+    }
+    console.log(xValues)
+    console.log(yValues)
+
+    create_bar_chart(
+        document.querySelector("#top-users-order"),
+        "bar",
+        xValues,
+        yValues,
+    "کاربران برتر در ماه اخیر",
+    )
+
 })
 
 function create_line_chart(ctx, type, xValues, yValues, label, borderColor){
@@ -155,5 +177,35 @@ function create_pie_chart(ctx, type, xValues, yValues, label){
       type: 'pie',
       data: data,
     };
+    return new Chart(ctx, config)
+}
+
+
+function create_bar_chart(ctx, type, xValues, yValues, label){
+    const data = {
+      labels: xValues,
+      datasets: [{
+        label: label,
+        data: yValues,
+        backgroundColor:  generateRGBString(xValues.length),
+        borderColor:  generateRGBString(xValues.length),
+        borderWidth: 1
+      }]
+    };
+
+    const config = {
+      type: 'bar',
+      data: data,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+      },
+    };
+
     return new Chart(ctx, config)
 }
