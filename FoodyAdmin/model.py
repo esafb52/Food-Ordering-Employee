@@ -74,6 +74,19 @@ class Admin(BaseModel):
     def SetLastLogin(self):
         self.LastLoginDate = datetime.datetime.now()
 
+    def SetEmail(self, email:str) -> None:
+        return None
+        # todo #Seach_THIS
+        self.Email = email
+
+    def SetPhone(self, phone:str) -> None:
+        """ Set Unique Password for User  """
+        if self.query.filter_by(PhoneNumber=phone).first():
+            return False
+        else:
+            self.PhoneNumber = phone
+            return True
+
     LastLoginDate = Column(DateTime, default=None, nullable=True, unique=False)
     Logs = relationship('AdminLog', backref='GetAdmin')
 

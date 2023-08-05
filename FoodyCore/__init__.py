@@ -1,7 +1,7 @@
-from flask import Flask, request, session
+from flask import Flask
 from FoodyCore.extension import ServerCsrf, ServerMigrate, ServerCaptchaV2, ServerSession, db, ServerCaptchaV2
 from FoodyConfig.config import AutoCinfig
-import FoodyAuth.utils as AuthUtils
+
 
 def create_app():
     """Factory Function for crreate flask app"""
@@ -37,31 +37,6 @@ app = create_app()
 
 
 
-
-@app.before_request
-def before_request():
-    """
-    This Middleware like django authentication put some data in request before heads up to actual view
-    :return: None
-
-
-        is_userAuthenticated = True  : if user is authenticated
-        is_userAuthenticated = False  : if user is not authenticated
-
-
-        user_object = Sqlalchemy<User Object>  : if is_userAuthenticated is True
-        user_object = None  : if is_userAuthenticated is False
-
-    """
-    request.is_userAuthenticated = False
-    request.user_object = None
-
-    if (account_id := session.get("account-id")):
-        user_db = AuthUtils.LoadUserObject(account_id)
-        if user_db:
-            request.is_userAuthenticated = True if session.get("login") else False
-            request.user_object = user_db
-
-
 import FoodyCore.template_filter
 import FoodyCore.http_errors
+import FoodyCore.baseView

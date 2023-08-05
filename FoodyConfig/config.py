@@ -3,20 +3,20 @@ import datetime
 import secrets
 import khayyam
 
-
 from pathlib import Path
 from dotenv import load_dotenv
 from redis import Redis
-from FoodyConfig.StaticConfig.SMS_IR_Config import SMS_IR_TEMPLATES
+try:
+    from FoodyConfig.StaticConfig.SMS_IR_Config import SMS_IR_TEMPLATES
+except ImportError:
+    raise ImportError("File FoodyConfig/StaticConfig/SMS_IR_Config.py is not found!")
 
 
 load_dotenv()
 BASE_DIR = Path(__file__).parent.parent
 
-
 STATUS = os.environ.get("APP_DEBUG", False)
 ADMIN_LOGIN_TOKEN = os.environ.get("ADMIN_LOGIN_TOKEN", "123654")
-
 
 # DB INFO <for localhost>
 USERNAME_DB = os.environ.get('DATABASE_USERNAME')
@@ -144,3 +144,11 @@ VALID_IMAGE_EXTENSIONS = [
     '.jpg',
     '.jpeg'
 ]
+
+
+ADMIN_CONFIG={
+    "ADMIN_USERNAME": os.environ.get("ADMIN_USERNAME", ""),
+    "ADMIN_PASSWORD" : os.environ.get("ADMIN_PASSWORD", ""),
+    "AMDIN_PHONE" : os.environ.get("ADMIN_PHONE_NUMBER", ""),
+    "ADMIN_EMAIL" : os.environ.get("ADMIN_EMAIL", "")
+}
