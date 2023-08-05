@@ -85,8 +85,8 @@ def Register_New_Order_Post():
     if not( DayDb := Day.query.filter_by(NameFa=day.strftime("%A")).first()): # getting food object
         return jsonify({"status": "failed", "error": "تاریخی با مشخصات وارد شده یافت نشد"}), 400
 
-    # if today == day and khayyam.JalaliDatetime.now().time() > datetime.time(9, 0, 0):
-    #     return jsonify({"status": "failed", "error": "امکان سفارش برای امروز بعد از ساعت 9 صبح، غیرفعال می باشد"}), 400
+    if today == day and khayyam.JalaliDatetime.now().time() > datetime.time(9, 0, 0):
+        return jsonify({"status": "failed", "error": "امکان سفارش برای امروز بعد از ساعت 9 صبح، غیرفعال می باشد"}), 400
 
     foodDb = FoodList.query.filter_by(PublicKey=key).first() #check food key exists
     if not foodDb:
