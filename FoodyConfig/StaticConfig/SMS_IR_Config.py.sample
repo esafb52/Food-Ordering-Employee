@@ -26,7 +26,8 @@
 # sms ir templates id
 SMS_IR_TEMPLATES = {
     "ADD-NEW-USER":  {
-        "ID": Put template id here <type int>,
+        # "ID": Put template id here <type int>,
+        "ID": 00000,
         "VARIABLES": ["EMPLOYEE_NAME"]
     }
 }

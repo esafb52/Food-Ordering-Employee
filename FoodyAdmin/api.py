@@ -78,8 +78,6 @@ def All_Orders_Sections_API():
 
     f = f.date() # from date
     e = e.date() # end date
-    print(f)
-    print(e)
 
     AllSections = [section for section in db.session.query(Section.id, Section.Name).distinct().all()]
 

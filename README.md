@@ -28,6 +28,32 @@ tech Stack:
         
 
 
+## Configurations and Settings:
+- before starting app you should do some steps before running application
+- first create your own config file with below command:
+ 
+      cp .env.sample .env
+- then open .env file and fill up all required fields 
+- required files are Database configuration and Admin configuration and SecretKey (You can leave other configurations as default value)
+- then init and migrate db with below commands:
+        
+        # remember at this poit you should create a database 
+        # and also put database name in .env file before running below commands
+          
+        flask db init
+        flask db migrate
+        flask db upgrade
+- after these steps you have to run below commands for SMS_IR config file
+
+        cp FoodyConfig/StaticConfig/SMS_IR_Config.py.sample FoodyConfig/StaticConfig/SMS_IR_Config.py
+- and then open FoodyConfig/StaticConfig/SMS_IR_Config.py and replace your template id (FROM SMS_IR) with fake one in file
+- then just run :
+
+        flask run [--port int:portNumber] [--debug] [ --reload ] [-- with-threads OR --without-threads]
+        or 
+        python app.py
+
+
 
 ## دمو تصویری
 ### Admin Panel
