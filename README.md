@@ -3,6 +3,27 @@
 ### سیستم اتوماسیون تغذیه یا سلف سرویس در واقع یک نوع از سیستم جامع تحویل غذا است که پرسنل و دانشجویان می توانند به منظور سفارش و صرف غذا در سازمان های دولتی و خصوصی و همچنین دانشگاه ها از این سیستم استفاده کنند.
   
 
+tech Stack:
+      
+      python3
+      Flask
+        Flask-Captcha2
+        Flask-Sqlalchemy
+        Flask-Session
+        Flask-Wtf
+        Flask-Migrate
+      Html
+      Css
+          Bootstrap 5.2
+          Bootstrap Icon 1.10
+      
+      Javascript
+        Chart js
+        Moment js
+        SweetAlert2 js
+        
+
+
 
 ## دمو تصویری
 ### Admin Panel
