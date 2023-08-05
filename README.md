@@ -12,11 +12,15 @@ tech Stack:
         Flask-Session
         Flask-Wtf
         Flask-Migrate
+        Flask-RQ
+
+      Redis 
+      Mysql
+      
       Html
       Css
           Bootstrap 5.2
           Bootstrap Icon 1.10
-      
       Javascript
         Chart js
         Moment js
