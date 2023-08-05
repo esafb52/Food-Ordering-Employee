@@ -62,7 +62,7 @@
                                   </button>
                                   <ul class="dropdown-menu">
 
-                                      <li><a class="dropdown-item" href="#">مشاهده</a></li>
+                                      <li><a class="dropdown-item" href="{{ url_for('admin.show_user_info', userKey=user.PublicKey) }}">مشاهده</a></li>
                                       <li><hr class="dropdown-divider m-0 p-0"></li>
                                       <li><a class="dropdown-item" href="{{url_for('admin.edit_user', userKey=user.PublicKey)}}">ویرایش</a></li>
                                       <li><hr class="dropdown-divider p-0 m-0"></li>

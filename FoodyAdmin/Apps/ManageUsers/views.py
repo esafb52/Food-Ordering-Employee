@@ -1,10 +1,15 @@
+import khayyam
 from flask import render_template, flash, redirect, request, url_for
+
+
 from FoodyAdmin import admin
 from FoodyAdmin.views import admin_login_required
-from FoodyCore.extension import ServerCaptchaV2, db
+from FoodyCore.extension import db
 from FoodyAuth.model import User, Section
-
+from FoodyOrder.model import Order
 from FoodyConfig.config import SMS_IR_TEMPLATES
+from FoodyCore.utils import TimeStamp
+
 import FoodyAdmin.Apps.ManageUsers.utils as ManageUsersUtils
 import FoodyAdmin.Apps.ManageUsers.form as ManageUsersForm
 
@@ -301,3 +306,31 @@ def edit_user_post(userKey):
             flash("عملیات با موفقیت انجام شد \n حساب کاربر با موفقیت بروزرسانی شد","success")
 
         return redirect(request.referrer)
+
+
+@admin.route(f"{BASE_URL}/show/<uuid:userKey>/", methods=["GET"])
+@admin_login_required
+def show_user_info(userKey):
+    """
+    this view take a user PublicKey and return user information in template
+    """
+    userKey = str(userKey)
+    if not (userDB := User.query.filter_by(PublicKey=userKey).first()):
+        flash("کاربری با مشخصات وارد شده یافت نشد", "warning")
+        return redirect(request.referrer)
+
+    Today = khayyam.JalaliDate.today()
+    t = TimeStamp()
+
+    startofMonth = t.convert_jlj2_georgian_d(khayyam.JalaliDate(year=Today.year, month=Today.month, day=1))
+    endofMonth = t.convert_jlj2_georgian_d(khayyam.JalaliDate(year=Today.year, month=Today.month, day=Today.daysinmonth))
+
+    ctx={
+        "manage_users": "show",
+        "manage_users_all": "item-active",
+        "user": userDB,
+        "total_orders": Order.query.filter(Order.UserID == userDB.id).count(),
+        "this_month_orders": Order.query.filter(Order.UserID == userDB.id).filter(Order.OrderDate >= startofMonth).filter(Order.OrderDate <= endofMonth).count()
+    }
+    return render_template(f"{TEMPLATE_FOLDER}/show_user_info.html", ctx=ctx)
+
