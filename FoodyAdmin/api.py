@@ -76,15 +76,19 @@ def All_Orders_Sections_API():
         print(e)
         return jsonify({"status":"failed", "error": "invalid date format"}), 400
 
-    f = f.date()
-    e = e.date()
+    f = f.date() # from date
+    e = e.date() # end date
+    print(f)
+    print(e)
 
     AllSections = [section for section in db.session.query(Section.id, Section.Name).distinct().all()]
 
     data = []
     for sectionID, sectionName in AllSections:
-        all_section_orders = Order.query.join(User, Order.UserID == User.id).filter(User.SectionID == sectionID)\
-            .filter(Order.OrderDate >= f).filter(Order.OrderDate <= e)\
+        all_section_orders = Order.query.join(User, Order.UserID == User.id)\
+            .filter(User.SectionID == sectionID)\
+            .filter(Order.OrderDate <= f)\
+            .filter(Order.OrderDate >= e)\
             .count()
 
         temp = {}

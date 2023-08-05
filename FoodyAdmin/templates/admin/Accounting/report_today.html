@@ -103,35 +103,35 @@
 {% block admin_script %}
 
     <script>
-        let colors = [
-            "bg-info",
-            "bg-primary",
-            "bg-danger",
-            "bg-success",
-            "bg-warning",
-            "bg-secondary",
-        ]
-
-        let allSectionWorks = document.querySelectorAll(".SectionWork")
-        Sections = new Set()
-
-        allSectionWorks.forEach((each)=>{
-            Sections.add(each.innerHTML)
-        })
-        Seprated = {}
-
-        Array.from(Sections).forEach((each, index)=>{
-            Seprated[each] = colors[index]
-        })
-
-        allSectionWorks.forEach((each)=>{
-            try{
-                each.className = Seprated[each.innerHTML]
-            }
-            catch{
-
-            }
-        })
+        {#let colors = [#}
+        {#    "bg-info",#}
+        {#    "bg-primary",#}
+        {#    "bg-danger",#}
+        {#    "bg-success",#}
+        {#    "bg-warning",#}
+        {#    "bg-secondary",#}
+        {#]#}
+        {##}
+        {#let allSectionWorks = document.querySelectorAll(".SectionWork")#}
+        {#Sections = new Set()#}
+        {##}
+        {#allSectionWorks.forEach((each)=>{#}
+        {#    Sections.add(each.innerHTML)#}
+        {#})#}
+        {#Seprated = {}#}
+        {##}
+        {#Array.from(Sections).forEach((each, index)=>{#}
+        {#    Seprated[each] = colors[index]#}
+        {#})#}
+        {##}
+        {#allSectionWorks.forEach((each)=>{#}
+        {#    try{#}
+        {#        each.className = Seprated[each.innerHTML]#}
+        {#    }#}
+        {#    catch{#}
+        {##}
+        {#    }#}
+        {#})#}
 
 
     </script>

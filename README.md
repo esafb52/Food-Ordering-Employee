@@ -5,6 +5,23 @@
 
 
 ## دمو تصویری
+### Admin Panel
+<img src="./docs/demo/admin-index.png">
+<img src="./docs/demo/admin-index2.png">
+<img src="./docs/demo/admin-users-index.png">
+<img src="./docs/demo/admin-users-index2.png">
+<img src="./docs/demo/admin-adduser-index.png">
+<img src="./docs/demo/admin-search-in-users.png">
+<img src="./docs/demo/admin-all_foods.png">
+<img src="./docs/demo/admin-all_foods2.png">
+<img src="./docs/demo/admin_add_food.png">
+<img src="./docs/demo/admin_add_food2.png">
+<img src="./docs/demo/admin_report_today.png">
+<img src="./docs/demo/admin_report_sections.png">
+<img src="./docs/demo/admin_unique_report.png">
+
+
+### User Panel
 <img src="./docs/demo/login-index.png">
 <img src="./docs/demo/login-index-info.png">
 <img src="./docs/demo/user-index.png">
